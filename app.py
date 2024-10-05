@@ -1,6 +1,4 @@
 import gradio as gr
-import matplotlib.pyplot as plt
-import pandas as pd
 import spaces
 from sentence_transformers import SentenceTransformer
 

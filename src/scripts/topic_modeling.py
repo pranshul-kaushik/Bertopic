@@ -1,15 +1,13 @@
-import spaces
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired, MaximalMarginalRelevance
-from cuml.cluster import HDBSCAN
-from cuml.manifold import UMAP
+from hdbscan import HDBSCAN
 from sentence_transformers import SentenceTransformer
+from umap import UMAP
 
 EMBEDDING_MODEL_NAME = "BAAI/bge-small-en"
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
-@spaces.GPU()
 def topic_modeling(
     docs,
     embeddings,

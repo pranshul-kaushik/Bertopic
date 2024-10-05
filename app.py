@@ -29,7 +29,5 @@ def greet(fileobj):
     return (fig, df)
 
 
-demo = gr.Interface(
-    fn=greet, inputs="file", outputs=[gr.outputs.Image(), gr.outputs.Dataframe()]
-)
+demo = gr.Interface(fn=greet, inputs="file", outputs=[gr.Image(), gr.Dataframe()])
 demo.launch()

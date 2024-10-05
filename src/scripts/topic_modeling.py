@@ -7,16 +7,10 @@ from umap import UMAP
 
 from src.utils.constants import EMBEDDING_MODEL_NAME
 
-
-class CustomSentenceTransformer(SentenceTransformer):
-    @spaces.GPU()
-    def encode(self, *args, **kwargs):
-        return super().encode(*args, **kwargs)
+embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
-embedding_model = CustomSentenceTransformer(EMBEDDING_MODEL_NAME)
-
-
+@spaces.GPU()
 def topic_modeling(
     docs,
     embeddings,

@@ -1,13 +1,35 @@
 import gradio as gr
-from bertopic import BERTopic
-from cuml.cluster import HDBSCAN
-from cuml.manifold import UMAP
-from cuml.preprocessing import normalize
+import matplotlib.pyplot as plt
+import pandas as pd
+from sentence_transformers import SentenceTransformer
 
-# embeddings = normalize(embeddings)
+from src.scripts.nlp_processing import embed_splitted_docs, split_corpus
+from src.scripts.topic_modeling import topic_modeling
+from src.utils.constants import EMBEDDING_MODEL_NAME
+from src.utils.utils import extract_corpus
 
-def greet(name):
-    return "Hello " + name + "!!"
+embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
-demo = gr.Interface(fn=greet, inputs="text", outputs="text")
+
+def greet(fileobj):
+
+    # Read the file
+    corpus = extract_corpus(fileobj)
+
+    # Split the corpus
+    splitted_docs = split_corpus(corpus)
+
+    # Embed the splitted documents
+    embeddings = embed_splitted_docs(splitted_docs, embedding_model)
+
+    # Topic modeling
+    fig, df = topic_modeling(splitted_docs, embeddings, embedding_model)
+
+    # Save the figure
+    return (fig, df)
+
+
+demo = gr.Interface(
+    fn=greet, inputs="file", outputs=[gr.outputs.Image(), gr.outputs.Dataframe()]
+)
 demo.launch()

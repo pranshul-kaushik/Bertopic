@@ -2,7 +2,8 @@ import spaces
 from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
-EMBEDDING_MODEL_NAME = "BAAI/bge-small-en"
+from src.utils.constants import EMBEDDING_MODEL_NAME
+
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 

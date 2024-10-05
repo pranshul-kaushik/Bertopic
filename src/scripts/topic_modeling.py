@@ -1,11 +1,20 @@
+import space
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired, MaximalMarginalRelevance
 from hdbscan import HDBSCAN
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 
-EMBEDDING_MODEL_NAME = "BAAI/bge-small-en"
-embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+from src.utils.constants import EMBEDDING_MODEL_NAME
+
+
+class CustomSentenceTransformer(SentenceTransformer):
+    @space.GPU()
+    def encode(self, *args, **kwargs):
+        return super().encode(*args, **kwargs)
+
+
+embedding_model = CustomSentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
 def topic_modeling(

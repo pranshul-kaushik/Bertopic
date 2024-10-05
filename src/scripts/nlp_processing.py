@@ -7,7 +7,7 @@ from src.utils.constants import EMBEDDING_MODEL_NAME
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
-@spaces.GPU()
+@spaces.GPU
 def embed_splitted_docs(splitted_docs):
     """
     Encode the given list of documents using the specified embedding model.

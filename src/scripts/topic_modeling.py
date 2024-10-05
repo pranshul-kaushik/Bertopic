@@ -10,7 +10,7 @@ from src.utils.constants import EMBEDDING_MODEL_NAME
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
-@spaces.GPU()
+@spaces.GPU(duration=120)
 def topic_modeling(
     docs,
     embeddings,

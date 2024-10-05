@@ -1,4 +1,4 @@
-import space
+import spaces
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired, MaximalMarginalRelevance
 from hdbscan import HDBSCAN
@@ -9,7 +9,7 @@ from src.utils.constants import EMBEDDING_MODEL_NAME
 
 
 class CustomSentenceTransformer(SentenceTransformer):
-    @space.GPU()
+    @spaces.GPU()
     def encode(self, *args, **kwargs):
         return super().encode(*args, **kwargs)
 

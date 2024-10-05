@@ -2,7 +2,6 @@ import spaces
 from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 
 
-@spaces.GPU()
 def embed_splitted_docs(splitted_docs, embedding_model):
     """
     Encode the given list of documents using the specified embedding model.

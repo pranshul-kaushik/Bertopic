@@ -87,13 +87,9 @@ def topic_modeling(
 
     fig = topic_model.visualize_document_datamap(docs=docs)
 
-    buf = BytesIO()
-    fig.savefig(buf, format="png")
-    buf.seek(0)
-
-    image = Image.open(buf)
-
-    buf.close()
+    image = Image.frombytes(
+        "RGB", fig.canvas.get_width_height(), fig.canvas.tostring_rgb()
+    )
 
     topic_info_df = topic_model.get_topic_info()
 

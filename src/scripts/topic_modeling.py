@@ -1,7 +1,10 @@
+from io import BytesIO
+
 import spaces
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired, MaximalMarginalRelevance
 from hdbscan import HDBSCAN
+from PIL import Image
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 
@@ -84,6 +87,14 @@ def topic_modeling(
 
     fig = topic_model.visualize_document_datamap(docs=docs)
 
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+
+    image = Image.open(buf)
+
+    buf.close()
+
     topic_info_df = topic_model.get_topic_info()
 
-    return fig, topic_info_df
+    return image, topic_info_df

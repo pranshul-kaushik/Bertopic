@@ -16,10 +16,10 @@ def greet(fileobj):
     embeddings = embed_splitted_docs(splitted_docs)
 
     # Topic modeling
-    fig, df = topic_modeling(splitted_docs, embeddings)
+    image, df = topic_modeling(splitted_docs, embeddings)
 
     # Save the figure
-    return (fig, df)
+    return (image, df)
 
 
 demo = gr.Interface(fn=greet, inputs="file", outputs=[gr.Image(), gr.Dataframe()])

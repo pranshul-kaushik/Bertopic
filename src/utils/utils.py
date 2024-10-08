@@ -10,7 +10,7 @@ def get_timestamp():
     Return the current timestamp as a string in the format
     "%Y%m%d_%H%M%S".
     """
-    return datetime.now().strftime("%Y%m%d_%H%M%S")
+    return datetime.now().strftime("%Y%m%d-%H%M%S")
 
 
 def extract_corpus(fileobj):
@@ -38,4 +38,4 @@ def extract_corpus(fileobj):
 
     os.remove(path)
 
-    return lines
+    return lines, fileobj.name

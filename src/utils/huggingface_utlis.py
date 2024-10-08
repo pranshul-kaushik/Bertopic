@@ -10,24 +10,10 @@ from src.utils.utils import get_timestamp
 HF_TOKEN = os.environ.get("HF_TOKEN", None)
 
 
-def save_model_to_hf_hub(topic_model, filename):
-    topic_model.push_to_hf_hub(
-        repo_id=MODEL_REPO_ID,
-        commit_message=f"{get_timestamp()} - {filename}",
-        token=HF_TOKEN,
-        private=True,
-        serialization="safetensors",
-        save_embedding_model=EMBEDDING_MODEL_NAME,
-        save_ctfidf=True,
-    )
-
-
-def save_dataset_to_hf_hub(topic_model, corpus, docs, filename):
+def save_dataset_to_hf_hub(topic_info_df, corpus, docs, filename):
     raw_df = pd.DataFrame({"text": corpus})
 
     intrim_df = pd.DataFrame({"text": docs})
-
-    topic_info_df = topic_model.get_topic_info()
 
     dataset = DatasetDict(
         {
@@ -42,5 +28,3 @@ def save_dataset_to_hf_hub(topic_model, corpus, docs, filename):
         private=True,
         token=HF_TOKEN,
     )
-
-    return topic_info_df

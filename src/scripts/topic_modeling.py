@@ -1,6 +1,5 @@
 import os
 
-import pandas as pd
 import spaces
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired, MaximalMarginalRelevance
@@ -8,13 +7,16 @@ from hdbscan import HDBSCAN
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 
-from src.utils.constants import EMBEDDING_MODEL_NAME
+from src.utils.constants import EMBEDDING_MODEL_NAME, MODEL_REPO_ID
+from src.utils.utils import get_timestamp
 
+HF_TOKEN = os.environ.get("HF_TOKEN", None)
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 
 @spaces.GPU(duration=120)
 def topic_modeling(
+    filename,
     docs,
     embeddings,
     n_gram_range=(3, 6),
@@ -85,4 +87,16 @@ def topic_modeling(
         verbose=True,
     ).fit(docs, embeddings=embeddings)
 
-    return topic_model
+    topic_model.push_to_hf_hub(
+        repo_id=MODEL_REPO_ID,
+        commit_message=f"{get_timestamp()} - {filename}",
+        token=HF_TOKEN,
+        private=True,
+        serialization="safetensors",
+        save_embedding_model=EMBEDDING_MODEL_NAME,
+        save_ctfidf=True,
+    )
+
+    topic_info_df = topic_model.get_topic_info()
+
+    return topic_info_df

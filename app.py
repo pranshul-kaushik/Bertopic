@@ -17,13 +17,10 @@ def greet(fileobj):
     embeddings = embed_splitted_docs(splitted_docs)
 
     # Topic modeling
-    topic_model = topic_modeling(splitted_docs, embeddings)
+    df = topic_modeling(filename, splitted_docs, embeddings)
 
-    # Save model
-    save_model_to_hf_hub(topic_model, filename)
-
-    # Save dataset
-    save_dataset_to_hf_hub(topic_model, corpus, splitted_docs, filename)
+    # Save
+    save_dataset_to_hf_hub(df, corpus, splitted_docs, filename)
 
     # Save the figure
     return df

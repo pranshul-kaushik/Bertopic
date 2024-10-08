@@ -4,8 +4,8 @@ from pathlib import Path
 import pandas as pd
 from datasets import Dataset, DatasetDict
 
+from src.utils.constants import DATASET_REPO_ID, EMBEDDING_MODEL_NAME, MODEL_REPO_ID
 from src.utils.utils import get_timestamp
-from utils.constants import DATASET_REPO_ID, EMBEDDING_MODEL_NAME, MODEL_REPO_ID
 
 HF_TOKEN = os.environ.get("HF_TOKEN", None)
 
